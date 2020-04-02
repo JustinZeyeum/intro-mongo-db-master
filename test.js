@@ -5,7 +5,20 @@ const connect = () => {
 }
 
 const student = new mongoose.Schema({
-    firstName: String
+    firstName: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    faveFoods: [{type: String}],
+    info: {
+        school: {
+            type: String
+        },
+        shoeSize: {
+            type: Number
+        }
+    }
 })
 
 const Student = mongoose.model('student', student)
@@ -13,6 +26,9 @@ const Student = mongoose.model('student', student)
 connect()
    .then(async connection => {
        const student = await Student.create({firstName: 'Tim'})
+       const found = await Student.find({firstName: 'thi'})
+       const foundById = await Student.findById('asdfsdfdsf')
+       const updated = await Student.findByIdAndUpdate('sadfsdf',{})
        console.log(student)
     })
     .catch(e => console.error(e))
